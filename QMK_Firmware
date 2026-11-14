@@ -1,0 +1,50 @@
+import board
+from kmk.kmk_keyboard import KMKKeyboard
+from kmk.keys import KC
+from kmk.scanners.keypad import KeysScanner
+from kmk.modules.encoder import EncoderHandler
+from kmk.modules.macros import Macros, Press, Release, Tap, Delay
+from kmk.extensions.media_keys import MediaKeys
+from kmk.extensions.rgb import RGB, AnimationModes
+
+keyboard = KMKKeyboard()
+
+# 4 keys wired to D7, D8, D9, D10
+keyboard.matrix = KeysScanner(
+    pins=[board.D7, board.D8, board.D9, board.D10],
+    value_when_pressed=False,
+)
+
+# Macros (Windows: Win+R, then type the address)
+macros = Macros()
+keyboard.modules.append(macros)
+keyboard.extensions.append(MediaKeys())
+
+def open_site(url):
+    return KC.MACRO(
+        Press(KC.LGUI), Tap(KC.R), Release(KC.LGUI),
+        Delay(400), url, Tap(KC.ENTER),
+    )
+
+YOUTUBE = open_site("https://www.youtube.com")
+GMAIL = open_site("https://mail.google.com")
+
+# Knob: A = D1, B = D2, push button = D0
+encoder = EncoderHandler()
+keyboard.modules.append(encoder)
+encoder.pins = ((board.D1, board.D2, board.D0, False),)
+encoder.map = [((KC.VOLU, KC.VOLD, KC.MUTE),)]   # swap the first two if it turns the wrong way
+
+# 2 RGB LEDs, data on D4
+rgb = RGB(
+    pixel_pin=board.D4,
+    num_pixels=2,
+    val_limit=80,
+    animation_mode=AnimationModes.BREATHING_RAINBOW,
+)
+keyboard.extensions.append(rgb)
+
+keyboard.keymap = [[YOUTUBE, GMAIL, KC.MPLY, KC.MNXT]]
+
+if __name__ == "__main__":
+    keyboard.go()
