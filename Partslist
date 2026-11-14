@@ -1,0 +1,20 @@
+# MacroPad
+
+A compact 4-key macropad with a volume knob and two RGB LEDs, built around a Seeed XIAO RP2040. I designed the PCB in KiCad and the 3D-printed case with AI help, and the firmware is written in KMK (CircuitPython).
+
+## What it does
+- 4 programmable keys (open YouTube, open Gmail, play/pause, next track)
+- 1 rotary encoder: turn for volume, press to mute
+- 2 SK6812 MINI RGB LEDs shown through windows in the top plate
+
+## Bill of Materials
+
+| Custom PCB (KiCad) | 1 | 107 x 49.5 mm, files in this repo |
+| Seeed XIAO RP2040 | 1 | Microcontroller, USB-C |
+| Cherry MX-style key switches | 4 | Gateron, Kailh or Cherry, solder-in |
+| MX-compatible keycaps | 4 | 1u |
+| EC12E rotary encoder with push switch | 1 | EC11-style, 5 pins |
+| Knob for the encoder | 1 | Wider than 15 mm, matches the shaft |
+| SK6812 MINI RGB LED | 2 | Surface-mount |
+| M3 x 10 mm screws | 4 | Case screws |
+| 3D-printed case (top + bottom) | 1 set | STL/STEP in this repo |
